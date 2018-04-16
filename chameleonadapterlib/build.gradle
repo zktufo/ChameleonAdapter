@@ -1,28 +1,31 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
+
+
+
     defaultConfig {
-        applicationId "com.greentown.chameleonadapter"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.squareup:javapoet:1.7.0'
     implementation 'com.android.support:recyclerview-v7:25.3.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation project(':chameleonadapterlib')
-    implementation project(':annotations')
-
+    implementation project(':chameleon-compiler')
 }

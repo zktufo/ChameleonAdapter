@@ -1,1 +1,1 @@
-include ':app', ':chameleonadapter', ':chameleon-compiler', ':annotations'
+include ':app', ':chameleonadapterlib', ':chameleon-compiler', ':annotations'
