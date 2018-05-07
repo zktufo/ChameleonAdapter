@@ -1,25 +1,32 @@
-package com.greentown.chameleonadapter;
+package com.leozkt.chameleonadapter.base;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @author zhengkaituo
  * @date 2018/4/16
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseFragment extends Fragment {
+
+    private View root;
+
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(getLayoutId(), container, false);
         initView();
         initData();
+        return root;
     }
 
+
     public <T extends View> T $(int resId) {
-        return (T) findViewById(resId);
+        return (T) root.findViewById(resId);
     }
 
     /**
