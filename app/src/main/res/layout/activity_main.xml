@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.greentown.chameleonadapter_lib.com.greentown.chameleonadapter.homepage.MainActivity">
+    tools:context="com.leozkt.chameleonadapter_lib.com.leozkt.chameleonadapter.homepage.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homepage_list"

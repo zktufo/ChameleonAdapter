@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     defaultConfig {
-        applicationId "com.greentown.chameleonadapter"
+        applicationId "com.leozkt.chameleonadapter"
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -22,7 +22,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation 'com.android.support:recyclerview-v7:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation project(':chameleonadapterlib')
-    implementation project(':annotations')
-
+    compile project(':chameleonadapterlib')
+    compile project(':annotations')
+    annotationProcessor project(':chameleon-compiler')
 }

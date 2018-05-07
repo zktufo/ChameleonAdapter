@@ -25,7 +25,5 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.squareup:javapoet:1.7.0'
-    implementation 'com.android.support:recyclerview-v7:25.3.1'
-    implementation project(':chameleon-compiler')
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 }
