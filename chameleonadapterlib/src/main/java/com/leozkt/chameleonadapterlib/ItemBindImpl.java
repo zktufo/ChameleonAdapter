@@ -1,32 +1,36 @@
 package com.leozkt.chameleonadapterlib;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 /**
  * @author zhengkaituo
- * @date 2018/4/9
+ * @date 2018/5/8
  */
-public abstract class BaseItemViewBinder<T, VH extends RecyclerView.ViewHolder> {
+public class ItemBindImpl implements BaseItemBinder {
 
-    private int layoutId;
-    private Class clazz;
+    int layoutId;
+    Class clazz;
 
-    public BaseItemViewBinder(int layoutId, Class<T> clazz) {
+    public ItemBindImpl(int layoutId, Class clazz) {
         this.layoutId = layoutId;
         this.clazz = clazz;
     }
 
+    @Override
     public RecyclerViewBaseViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent) {
         return new RecyclerViewBaseViewHolder(inflater.inflate(layoutId, parent, false));
     }
 
+    @Override
+    public void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item) {
 
-    public abstract void onBindViewHolder(VH holder, int position, T item);
+    }
 
-    public Class<T> getItemClass() {
+    @Override
+    public Class getItemClass() {
         return clazz;
     }
+
 
 }

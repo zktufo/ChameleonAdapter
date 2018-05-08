@@ -3,14 +3,20 @@ package com.leozkt.chameleonadapterlib;
 import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * Easy way to add Header/Footer or register various item type
+ *
  * @author zhengkaituo
  * @date 2018/4/9
  */
@@ -18,7 +24,13 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private static final int BASE_ITEM_TYPE_HEADER = 100000;
     private static final int BASE_ITEM_TYPE_FOOTER = 200000;
-    private final Context mContext;
+    private static Map<Class<?>, Constructor> BINDINGS = new HashMap();
+    private static boolean debug = false;
+    private static final String TAG = "ChameleonAdapter";
+
+    public static void setDebug(boolean debug) {
+        ChameleonAdapter.debug = debug;
+    }
 
     private List<?> items;
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
@@ -36,7 +48,7 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return holder;
         }
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        BaseItemBinder<?, ?> binder = typeLinkPool.getItemViewBinder(viewType);
+        BaseItemBinder binder = typeLinkPool.getItemViewBinder(viewType);
         return binder.onCreateViewHolder(inflater, parent);
     }
 
@@ -50,7 +62,6 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public ChameleonAdapter(Context context) {
-        mContext = context;
         typeLinkPool = new TypeLinkPoolImp();
     }
 
@@ -62,7 +73,8 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return;
         }
         BaseItemBinder itemViewPresenter = typeLinkPool.getItemViewBinder(holder.getItemViewType());
-        itemViewPresenter.onBindViewHolder(holder, position, items.get(holder.getAdapterPosition() - getHeadersCount()));
+        RecyclerViewBaseViewHolder baseHolder = (RecyclerViewBaseViewHolder) holder;
+        itemViewPresenter.onBindViewHolder(baseHolder, position, items.get(holder.getAdapterPosition() - getHeadersCount()));
     }
 
     @Override
@@ -155,4 +167,68 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
+    public static Unbinder bind(Object target) {
+        Class<?> targetClass = target.getClass();
+        if (debug) {
+            Log.d(TAG, "Looking up itemViewBinding for " + targetClass.getName());
+        }
+        Constructor<? extends Unbinder> constructor = findBindingConstructorForClass(targetClass);
+
+        if (constructor == null) {
+            return null;
+        }
+        try {
+            return constructor.newInstance(target);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to invoke " + constructor, e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Unable to invoke " + constructor, e);
+        } catch (InvocationTargetException e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof RuntimeException) {
+                throw (RuntimeException) cause;
+            }
+            if (cause instanceof Error) {
+                throw (Error) cause;
+            }
+            throw new RuntimeException("Unable to create binding instance.", cause);
+        }
+    }
+
+    private static Constructor findBindingConstructorForClass(Class<?> cls) {
+        Constructor<? extends Unbinder> bindingCtor = BINDINGS.get(cls);
+        if (bindingCtor != null) {
+            if (debug) {
+                Log.d(TAG, "HIT: Cached in binding map.");
+            }
+            return bindingCtor;
+        }
+        String clsName = cls.getName();
+        if (clsName.startsWith("android.") || clsName.startsWith("java.")) {
+            if (debug) {
+                Log.d(TAG, "MISS: Reached framework class. Abandoning search.");
+            }
+            return null;
+        }
+        try {
+            Class<?> bindingClass = cls.getClassLoader().loadClass(clsName + "_ItemViewBinding");
+            //noinspection unchecked
+            bindingCtor = (Constructor<? extends Unbinder>) bindingClass.getConstructor(cls);
+            if (debug) {
+                Log.d(TAG, "HIT: Loaded binding class and constructor.");
+            }
+        } catch (ClassNotFoundException e) {
+            if (debug) {
+                Log.d(TAG, "Not found. Trying superclass " + cls.getSuperclass().getName());
+            }
+            bindingCtor = findBindingConstructorForClass(cls.getSuperclass());
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Unable to find binding constructor for " + clsName, e);
+        }
+        BINDINGS.put(cls, bindingCtor);
+        return bindingCtor;
+    }
 }
+
+
+

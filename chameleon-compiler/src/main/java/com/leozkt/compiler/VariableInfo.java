@@ -8,14 +8,14 @@ import javax.lang.model.element.VariableElement;
  */
 public class VariableInfo {
     int layoutId;
-    Class entityClass;
+    String entityClass;
     VariableElement mVariableElement;
 
     public void setLayoutId(int layoutId) {
         this.layoutId = layoutId;
     }
 
-    public void setEntityClass(Class entityClass) {
+    public void setEntityClass(String entityClass) {
         this.entityClass = entityClass;
     }
 

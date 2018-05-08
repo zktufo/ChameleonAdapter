@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import com.leozkt.annotations.BindItem;
 import com.leozkt.chameleonadapter.R;
 import com.leozkt.chameleonadapter.base.BaseActivity;
+import com.leozkt.chameleonadapter.homepage.data_entity.FirstItemEntity;
+import com.leozkt.chameleonadapter.homepage.data_entity.SecondItemEntity;
 import com.leozkt.chameleonadapterlib.BaseItemBinder;
 import com.leozkt.chameleonadapterlib.ChameleonAdapter;
 import com.leozkt.chameleonadapterlib.data.BaseEntity;
-import com.leozkt.chameleonadapterlib.data.FirstItemEntity;
-import com.leozkt.chameleonadapterlib.data.SecondItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity implements HomepageContract.View 
     @BindItem(value = FirstItemEntity.class, layout = R.layout.item_first_layout)
     BaseItemBinder mThirdItemBinder;
 
-    @BindItem(value = SecondItemEntity.class, layout = R.layout.item_first_layout)
+    @BindItem(value = SecondItemEntity.class, layout = R.layout.item_second_layout)
     BaseItemBinder mFourthItemBinder;
 
 
@@ -54,8 +54,8 @@ public class MainActivity extends BaseActivity implements HomepageContract.View 
     public void initData() {
         mAdapter = ChameleonAdapter.with(this);
         mAdapter.setItems(mDatas);
-        mAdapter.link(new FirstItemViewBinder(R.layout.item_first_layout));
-        mAdapter.link(new SecondItemViewBinder(R.layout.item_second_layout));
+        mAdapter.link(mThirdItemBinder);
+        mAdapter.link(mFourthItemBinder);
         homepageList.setAdapter(mAdapter);
         new MultiTypePresenter(this);
     }

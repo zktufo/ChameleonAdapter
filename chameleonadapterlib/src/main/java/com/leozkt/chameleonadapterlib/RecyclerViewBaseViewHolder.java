@@ -6,6 +6,7 @@ import android.view.View;
 import com.leozkt.chameleonadapterlib.exception.ResNotFoundException;
 
 /**
+ *
  * Created by kaituozheng on 2017/5/15.
  */
 

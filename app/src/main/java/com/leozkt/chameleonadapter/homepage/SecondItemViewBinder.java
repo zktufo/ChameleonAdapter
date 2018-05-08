@@ -5,13 +5,13 @@ import android.view.ViewGroup;
 
 import com.leozkt.chameleonadapterlib.BaseItemBinder;
 import com.leozkt.chameleonadapterlib.RecyclerViewBaseViewHolder;
-import com.leozkt.chameleonadapterlib.data.SecondItemEntity;
+import com.leozkt.chameleonadapter.homepage.data_entity.SecondItemEntity;
 
 /**
  * @author zhengkaituo
  * @date 2018/4/16
  */
-public class SecondItemViewBinder implements BaseItemBinder<SecondItemEntity, RecyclerViewBaseViewHolder> {
+public class SecondItemViewBinder implements BaseItemBinder {
 
     int layoutId;
 
@@ -25,9 +25,10 @@ public class SecondItemViewBinder implements BaseItemBinder<SecondItemEntity, Re
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, SecondItemEntity item) {
+    public void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item) {
 
     }
+
 
     @Override
     public Class<SecondItemEntity> getItemClass() {
