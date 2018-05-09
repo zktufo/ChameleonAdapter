@@ -3,15 +3,15 @@ package com.leozkt.chameleonadapter.homepage;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.leozkt.chameleonadapter.homepage.data_entity.SecondItemEntity;
 import com.leozkt.chameleonadapterlib.BaseItemBinder;
 import com.leozkt.chameleonadapterlib.RecyclerViewBaseViewHolder;
-import com.leozkt.chameleonadapter.homepage.data_entity.SecondItemEntity;
 
 /**
  * @author zhengkaituo
  * @date 2018/4/16
  */
-public class SecondItemViewBinder implements BaseItemBinder {
+public class SecondItemViewBinder extends BaseItemBinder {
 
     int layoutId;
 

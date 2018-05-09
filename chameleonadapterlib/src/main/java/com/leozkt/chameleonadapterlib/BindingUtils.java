@@ -1,10 +1,5 @@
 package com.leozkt.chameleonadapterlib;
 
-import android.content.Context;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Utils for generating the ItemBinder with specific layout&item class
  *
@@ -14,8 +9,8 @@ import java.util.Map;
 public class BindingUtils {
 
 
-    public static BaseItemBinder getBinder(int layoutId, Class clazz) {
-        BaseItemBinder baseItemBinder = new ItemBindImpl(layoutId, clazz);
+    public static DefaultItemBinder getBinder(int layoutId, Class clazz) {
+        DefaultItemBinder baseItemBinder = new DefaultItemBinder(layoutId, clazz);
         return baseItemBinder;
     }
 

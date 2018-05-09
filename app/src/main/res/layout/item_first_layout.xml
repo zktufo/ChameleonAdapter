@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:id="@+id/txt_first"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/main_red"

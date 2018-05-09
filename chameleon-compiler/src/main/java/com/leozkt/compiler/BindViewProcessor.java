@@ -127,11 +127,6 @@ public class BindViewProcessor extends AbstractProcessor {
                     FieldSpec.Builder target = FieldSpec.builder(ClassName.get(typeElement.asType()), "target")
                             .addModifiers(Modifier.PRIVATE);
 
-                    MethodSpec.Builder getItemClass = MethodSpec.methodBuilder("getItemClass")
-                            .addModifiers(Modifier.PUBLIC)
-                            .returns(TypeName.INT)
-                            .addStatement("return 1");
-
                     /**
                      * 创建构造方法
                      */
@@ -159,7 +154,6 @@ public class BindViewProcessor extends AbstractProcessor {
                             .addJavadoc("DO NOT MODIFY!IT IS AUTO GENERATED")
                             .addSuperinterface(ClassName.get("com.leozkt.chameleonadapterlib", "Unbinder"))
                             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                            .addMethod(getItemClass.build())
                             .addMethod(init.build())
                             .addMethod(unbind.build())
                             .addField(target.build())

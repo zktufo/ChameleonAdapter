@@ -37,6 +37,11 @@ public class TypeLinkPoolImp implements TypeLinkPool {
         binderPools.put(itemViewBinder.getItemClass().hashCode(), itemViewBinder);
     }
 
+    @Override
+    public void linkAll(SparseArray<BaseItemBinder> bindPools) {
+        binderPools = bindPools;
+    }
+
 
     /**
      * @param item

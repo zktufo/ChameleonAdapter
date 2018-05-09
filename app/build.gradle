@@ -23,6 +23,5 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':chameleonadapterlib')
-    compile project(':annotations')
     annotationProcessor project(':chameleon-compiler')
 }

@@ -2,6 +2,7 @@ package com.leozkt.chameleonadapter.homepage;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.leozkt.annotations.BindItem;
 import com.leozkt.chameleonadapter.R;
@@ -10,6 +11,8 @@ import com.leozkt.chameleonadapter.homepage.data_entity.FirstItemEntity;
 import com.leozkt.chameleonadapter.homepage.data_entity.SecondItemEntity;
 import com.leozkt.chameleonadapterlib.BaseItemBinder;
 import com.leozkt.chameleonadapterlib.ChameleonAdapter;
+import com.leozkt.chameleonadapterlib.DefaultItemBinder;
+import com.leozkt.chameleonadapterlib.RecyclerViewBaseViewHolder;
 import com.leozkt.chameleonadapterlib.data.BaseEntity;
 
 import java.util.ArrayList;
@@ -22,10 +25,7 @@ public class MainActivity extends BaseActivity implements HomepageContract.View 
 
     RecyclerView homepageList;
     @BindItem(value = FirstItemEntity.class, layout = R.layout.item_first_layout)
-    BaseItemBinder mThirdItemBinder;
-
-    @BindItem(value = SecondItemEntity.class, layout = R.layout.item_second_layout)
-    BaseItemBinder mFourthItemBinder;
+    DefaultItemBinder mFirstItemBinder;
 
 
     ChameleonAdapter mAdapter;
@@ -52,12 +52,24 @@ public class MainActivity extends BaseActivity implements HomepageContract.View 
 
     @Override
     public void initData() {
-        mAdapter = ChameleonAdapter.with(this);
+        TextView textView = new TextView(this);
+        textView.setText("this is header view");
+        mAdapter = new ChameleonAdapter(this);
         mAdapter.setItems(mDatas);
-        mAdapter.link(mThirdItemBinder);
-        mAdapter.link(mFourthItemBinder);
+        mAdapter.link(mFirstItemBinder);
+        mAdapter.link(new SecondItemViewBinder(R.layout.item_second_layout));
+        mAdapter.addHeaderView(textView);
         homepageList.setAdapter(mAdapter);
         new MultiTypePresenter(this);
+
+        mFirstItemBinder.setOnBindListener(new BaseItemBinder.OnBindListener() {
+            @Override
+            public void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item) {
+                TextView txtFirst = (TextView) holder.getViewById(R.id.txt_first);
+                txtFirst.setText("haha" + position);
+
+            }
+        });
     }
 
 

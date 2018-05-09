@@ -7,7 +7,8 @@ import android.view.ViewGroup;
  * @author zhengkaituo
  * @date 2018/4/17
  */
-public interface BaseItemBinder {
+public abstract class BaseItemBinder {
+    OnBindListener mOnBindListener;
 
     /**
      * Create ViewHolder
@@ -16,7 +17,7 @@ public interface BaseItemBinder {
      * @param parent
      * @return
      */
-    RecyclerViewBaseViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent);
+    public abstract RecyclerViewBaseViewHolder onCreateViewHolder(LayoutInflater inflater, ViewGroup parent);
 
     /**
      * Binding the view event with ViewHolder
@@ -25,13 +26,21 @@ public interface BaseItemBinder {
      * @param position
      * @param item
      */
-    void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item);
+    public abstract void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item);
 
     /**
      * Return the item class
      *
      * @return
      */
-    Class getItemClass();
+    public abstract Class getItemClass();
+
+    public void setOnBindListener(OnBindListener onBindListener) {
+        this.mOnBindListener = onBindListener;
+    }
+
+    public interface OnBindListener {
+        void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item);
+    }
 
 }

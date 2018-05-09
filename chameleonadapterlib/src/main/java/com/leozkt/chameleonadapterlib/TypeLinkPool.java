@@ -1,5 +1,7 @@
 package com.leozkt.chameleonadapterlib;
 
+import android.util.SparseArray;
+
 /**
  * @author zhengkaituo
  * @date 2018/4/9
@@ -7,19 +9,26 @@ package com.leozkt.chameleonadapterlib;
 public interface TypeLinkPool {
 
     /**
-     * Return the ItemViewBinder
+     * Return the itemViewBinder
      *
      * @param index
      * @return
      */
-    BaseItemBinder getItemViewBinder(int index) ;
+    BaseItemBinder getItemViewBinder(int index);
 
     /**
-     * Link the ItemViewBinder
+     * Link the itemViewBinder
      *
      * @param itemViewBinder
      */
-     void link(BaseItemBinder itemViewBinder);
+    void link(BaseItemBinder itemViewBinder);
+
+    /**
+     * Link the bindPools
+     *
+     * @param bindPools
+     */
+    void linkAll(SparseArray<BaseItemBinder> bindPools);
 
     /**
      * Return the type or the specific item

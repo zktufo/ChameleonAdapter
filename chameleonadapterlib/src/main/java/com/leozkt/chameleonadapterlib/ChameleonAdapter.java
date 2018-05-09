@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.leozkt.chameleonadapterlib.data.BaseEntity;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Easy way to add Header/Footer or register various item type
+ * Easy way to register various item type or add Header/Footer
  *
  * @author zhengkaituo
  * @date 2018/4/9
@@ -32,7 +34,7 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ChameleonAdapter.debug = debug;
     }
 
-    private List<?> items;
+    private List<BaseEntity> items;
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
     private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
     TypeLinkPool typeLinkPool;
@@ -57,7 +59,7 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      *
      * @param items
      */
-    public void setItems(List<?> items) {
+    public void setItems(List<BaseEntity> items) {
         this.items = items;
     }
 
@@ -85,7 +87,7 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return mFootViews.keyAt(position - getHeadersCount() - getRealItemCount());
         }
 
-        Object item = items.get(position);
+        Object item = items.get(position - getHeadersCount());
 
         return typeLinkPool.returnItemType(item);
     }
@@ -157,16 +159,13 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     /**
-     * Construct the instance of ChameleonAdapter
+     * Create the itemViewBinder with specific layout and item entity
+     * <p>
+     * The code is a copy from the source code of ButterKnife ：）
      *
-     * @param context
+     * @param target
      * @return
      */
-    public static ChameleonAdapter with(Context context) {
-        return new ChameleonAdapter(context);
-    }
-
-
     public static Unbinder bind(Object target) {
         Class<?> targetClass = target.getClass();
         if (debug) {
@@ -195,6 +194,14 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
+    /**
+     * Finding the constructor for specific class
+     * <p>
+     * The code is a copy from the source code of ButterKnife ：）
+     *
+     * @param cls
+     * @return
+     */
     private static Constructor findBindingConstructorForClass(Class<?> cls) {
         Constructor<? extends Unbinder> bindingCtor = BINDINGS.get(cls);
         if (bindingCtor != null) {

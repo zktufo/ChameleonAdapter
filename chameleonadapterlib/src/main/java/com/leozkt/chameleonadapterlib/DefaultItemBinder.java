@@ -7,12 +7,13 @@ import android.view.ViewGroup;
  * @author zhengkaituo
  * @date 2018/5/8
  */
-public class ItemBindImpl implements BaseItemBinder {
+public final class DefaultItemBinder extends BaseItemBinder {
 
     int layoutId;
     Class clazz;
+    OnBindListener mOnBindListener;
 
-    public ItemBindImpl(int layoutId, Class clazz) {
+    public DefaultItemBinder(int layoutId, Class clazz) {
         this.layoutId = layoutId;
         this.clazz = clazz;
     }
@@ -24,12 +25,19 @@ public class ItemBindImpl implements BaseItemBinder {
 
     @Override
     public void onBindViewHolder(RecyclerViewBaseViewHolder holder, int position, Object item) {
-
+        if (mOnBindListener != null) {
+            mOnBindListener.onBindViewHolder(holder, position, item);
+        }
     }
 
     @Override
     public Class getItemClass() {
         return clazz;
+    }
+
+    @Override
+    public void setOnBindListener(OnBindListener onBindListener) {
+        this.mOnBindListener = onBindListener;
     }
 
 
