@@ -2,6 +2,7 @@ package com.leozkt.chameleonadapterlib;
 
 import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,6 +53,22 @@ public class ChameleonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         BaseItemBinder binder = typeLinkPool.getItemViewBinder(viewType);
         return binder.onCreateViewHolder(inflater, parent);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {
+            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
+            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return getItemViewType(position) == mHeaderViews.keyAt(position)
+                            ? gridManager.getSpanCount() : 1;
+                }
+            });
+        }
     }
 
     /**

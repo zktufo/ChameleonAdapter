@@ -1,5 +1,6 @@
 package com.leozkt.chameleonadapter.homepage;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class MainActivity extends BaseActivity implements HomepageContract.View 
     @Override
     public void initView() {
         homepageList = $(R.id.homepage_list);
-        homepageList.setLayoutManager(new LinearLayoutManager(this));
+        homepageList.setLayoutManager(new GridLayoutManager(this,3));
     }
 
     @Override
