@@ -1,5 +1,6 @@
 # ChameleonAdapter
 ![img](http://img.ivsky.com/img/tupian/pre/201610/31/bianselong_texie-004.jpg)
+
 An easy way to create multiple item type list using annotation
 
 In daily work, it's hard to manage the adapter with various item type so that we must add lots of code to control the behavior. ChameleonAdapter allows us to create item controller for specific item type using annotation and register the controller into adapter.
@@ -91,6 +92,10 @@ public class FirstItemViewBinder extends BaseItemBinder {
 }
 ``` 
 
+### Screenshot
+![screenshot1](https://upload-images.jianshu.io/upload_images/1894569-e5356e6dae0bad36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![screenshot2](https://upload-images.jianshu.io/upload_images/1894569-5283a779f7e00f76.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ## TODO
 - upload to jcenter
 - support one-many mode
@@ -100,5 +105,7 @@ public class FirstItemViewBinder extends BaseItemBinder {
 - class loading is inspired by [JakeWharton/butterknife](https://github.com/JakeWharton/butterknife)
 
 
+## License
+Apache License 2.0
 
 
