@@ -36,7 +36,6 @@ import javax.lang.model.util.Elements;
 
 /**
  * @author zhengkaituo
- * @date 2018/4/17
  */
 @AutoService(Processor.class)
 public class BindViewProcessor extends AbstractProcessor {

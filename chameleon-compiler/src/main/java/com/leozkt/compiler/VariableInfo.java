@@ -4,7 +4,6 @@ import javax.lang.model.element.VariableElement;
 
 /**
  * @author zhengkaituo
- * @date 2018/4/17
  */
 public class VariableInfo {
     int layoutId;

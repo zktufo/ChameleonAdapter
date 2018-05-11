@@ -1,5 +1,7 @@
 package com.leozkt.annotations;
 
+import android.support.annotation.IdRes;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -8,12 +10,12 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
  * @author zhengkaituo
- * @date 2018/4/9
+ *
  */
 @Retention(CLASS)
 @Target(FIELD)
 public @interface BindItem {
     Class value();
 
-    int layout();
+    @IdRes int layout();
 }
